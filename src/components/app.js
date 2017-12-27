@@ -1,11 +1,11 @@
 import React from 'react';
 import { AppBar, Layout } from 'react-toolbox';
-import appStyle from './app.css';
+import './App.css';
 
 const Gallery = (props) => {
   const { items } = props;
   const el = items.map(item => (
-    <li key={item.id} className={appStyle.item}>
+    <li key={item.id} className="item">
       <a href="#" style={{ backgroundImage: `url(${item.cover_photo.urls.thumb})` }}>
         {item.title}
       </a>
@@ -23,7 +23,7 @@ class App extends React.Component {
       <div>
         <Layout>
           <AppBar />
-          <div className={appStyle.content}>
+          <div className="content">
             <div>相簿</div>
             <div>
               <Gallery items={this.data} />

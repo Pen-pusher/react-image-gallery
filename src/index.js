@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 import 'normalize.css';
-import './base.css';
-import App from './components/app';
+import './Base.css';
+import App from './components/App';
 
 const fetchUrl = 'https://api.unsplash.com/collections/';
 const id = '2ebf57611c3566052a250a60c74cd822ac81e4198686d9dc5607a532508937f4';
