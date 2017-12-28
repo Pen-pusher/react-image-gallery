@@ -2,10 +2,10 @@ import React from 'react';
 import Style from './Gallery.css';
 
 class Gallery extends React.Component {
-  // constructor(props) {
-  //   super(props);
+  constructor(props) {
+    super(props);
 
-  // }
+  }
   render() {
     const el = this.props.items.map(item => (
       <li key={item.id} className={Style.item}>
