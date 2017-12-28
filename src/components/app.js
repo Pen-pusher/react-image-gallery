@@ -1,17 +1,7 @@
 import React from 'react';
 import { AppBar, Layout } from 'react-toolbox';
+import Gallery from './Gallery';
 import Style from './App.css';
-
-const Gallery = (props) => {
-  const { items } = props;
-  const el = items.map(item => (
-    <li key={item.id} className={Style.item}>
-      <a href="#" style={{ backgroundImage: `url(${item.cover_photo.urls.thumb})` }}>
-        {item.title}
-      </a>
-    </li>));
-  return <ul className={Style['list-group']}>{el}</ul>;
-};
 
 class App extends React.Component {
   constructor(props) {
@@ -23,10 +13,7 @@ class App extends React.Component {
       <Layout>
         <AppBar />
         <div className={Style.content}>
-          <div className={Style.gallery}>
-            <div>相簿</div>
-            <Gallery items={this.data} />
-          </div>
+          <Gallery items={this.data} isAlbum />
         </div>
       </Layout>
     );
