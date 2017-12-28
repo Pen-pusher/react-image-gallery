@@ -5,7 +5,7 @@ import './Base.css';
 import App from './components/App';
 import Fetch from './Fetch';
 
-const promise = Fetch();
+const promise = Fetch('collections/featured');
 
 promise
   .then(response => response.json())
