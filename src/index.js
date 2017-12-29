@@ -5,13 +5,14 @@ import './Base.css';
 import App from './components/App';
 import Fetch from './Fetch';
 
-const promise = Fetch('collections/featured/?per_page=20');
-
-promise
-  .then(response => response.json())
+Fetch('collections/featured/?per_page=20')
   .then((response) => {
-    render(
-      <App albumData={response} />,
-      document.getElementById('root')
-    );
+    if (response.errors) {
+      console.log('not ok');
+    } else {
+      render(
+        <App albumData={response} />,
+        document.getElementById('root')
+      );
+    }
   });

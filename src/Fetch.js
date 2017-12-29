@@ -7,7 +7,14 @@ const Fetch = (pathname) => {
     method: 'GET',
     headers: myHeaders
   };
-  return fetch(fetchUrl, init);
+  return fetch(fetchUrl, init)
+    .then(results => results.json())
+    .then((results) => {
+      return results;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export default Fetch;

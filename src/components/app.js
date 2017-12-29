@@ -17,20 +17,22 @@ class App extends React.Component {
       photoData: props.photoData || []
     };
     this.handleBrowsing = this.handleBrowsing.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   handleBrowsing(id) {
     const getCollection = Fetch(`collections/${id}`);
     const getRelated = Fetch(`collections/${id}/related`);
     const getPhotos = Fetch(`collections/${id}/photos?per_page=20`);
-    Promise.all([getCollection, getRelated, getPhotos]).then((results) => {
-      Promise.all(results.map((result) => result.json())).then((r) => {
-        this.setState({
-          collection: r[0],
-          albumData: r[1],
-          photoData: r[2]
-        });
+    Promise.all([getCollection, getRelated, getPhotos]).then((r) => {
+      this.setState({
+        collection: r[0],
+        albumData: r[1],
+        photoData: r[2]
       });
     });
+  }
+  handleClick() {
+
   }
   render() {
     const copyrightYear = new Date().getFullYear();
@@ -54,7 +56,7 @@ class App extends React.Component {
               <Gallery items={this.state.albumData} isAlbum handleBrowsing={this.handleBrowsing} />
             }
             {this.state.photoData.length > 0 &&
-              <Gallery items={this.state.photoData} />
+              <Gallery items={this.state.photoData} handleClick={this.handleClick} />
             }
           </div>
           <div className={Style.footer}>
