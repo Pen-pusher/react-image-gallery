@@ -1,3 +1,8 @@
+.subtitle {
+  margin-bottom: 16px;
+  padding-left: 16px;
+}
+
 /* Base gallery list group styles */
 .list-group {
   display: flex;
@@ -15,6 +20,7 @@
 }
 
 .item a {
+  background-color: rgba(0,0,0,.12);
   font-size: 0;
   display: block;
   width: 100%;
@@ -28,7 +34,7 @@
 
 /* Album gallery styles */
 .album {
-  margin: 0 8px;
+  margin: 0 16px;
 }
 
 .album .item {
@@ -42,7 +48,6 @@
 
 .album .item a {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
-  background-color: rgba(0,0,0,.12);
   border-radius: 8px;
 }
 
@@ -52,14 +57,25 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-top: 2px;
+  margin-top: 8px;
   font-size: 0.813rem;
+  padding-bottom: 2px;
 }
 
 /* Photo gallery styles */
 .photo {
   margin: 0 4px;
 }
+
+.photo .item {
+  width: calc((100% -2px * 3)/4);
+  margin-bottom: 2px;
+}
+
+.photo .list-group .item:nth-child(4n+1):nth-last-child(-n+4) ~ .item {
+  margin-left: 2px;
+}
+
 
 @media screen and (min-width: 768px) {
   .album .item {
