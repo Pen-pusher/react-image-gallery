@@ -1,5 +1,13 @@
 module.exports = {
   plugins: {
-    'postcss-cssnext': {}
+    'postcss-cssnext': {
+      features: {
+        customProperties: {
+          variables: {
+            'color-primary': '#64bb82'
+          }
+        }
+      }
+    }
   }
 };
