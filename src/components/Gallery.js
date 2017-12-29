@@ -4,7 +4,7 @@ import Style from './Gallery.css';
 class Gallery extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.items);
+    // console.log(props.items);
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(id) {
@@ -21,7 +21,7 @@ class Gallery extends React.Component {
             tabIndex="0"
             style={{ backgroundImage: `url(${bgUrl})` }}
             onClick={() => { this.handleClick(`${item.id}`); }}
-            onKeyDown={() => { this.handleClick(`${item.id}`); }}
+            onKeyDown={(event) => { if (event.which === 13) { this.handleClick(`${item.id}`); } }}
           >
             {item.id}
           </span>
