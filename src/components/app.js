@@ -2,6 +2,8 @@ import React from 'react';
 import { AppBar, Layout, Panel, Button } from 'react-toolbox';
 import Gallery from './Gallery';
 import Style from './App.css';
+
+// React-Toolbox themeing
 import PanelTheme from '../css/PanelTheme.css';
 import AppBarTheme from '../css/AppBarTheme.css';
 
@@ -10,6 +12,11 @@ class App extends React.Component {
     super(props);
     this.albumData = props.albumData || [];
     this.photoData = props.photoData || [];
+    this.handleBrowsing = this.handleBrowsing.bind(this);
+  }
+  handleBrowsing(id) {
+    // event.preventDefault();
+    console.log(id);
   }
   render() {
     const copyrightYear = new Date().getFullYear();
@@ -30,7 +37,7 @@ class App extends React.Component {
           }
           <div className={Style.content}>
             {this.albumData.length > 0 &&
-              <Gallery items={this.albumData} isAlbum />
+              <Gallery items={this.albumData} isAlbum handleBrowsing={this.handleBrowsing} />
             }
             {this.photoData.length > 0 &&
               <Gallery items={this.photoData} />

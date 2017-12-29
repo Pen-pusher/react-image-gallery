@@ -5,16 +5,27 @@ class Gallery extends React.Component {
   constructor(props) {
     super(props);
     console.log(props.items);
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick(id) {
+    this.props.handleBrowsing(id);
   }
   render() {
     const el = this.props.items.map((item) => {
       const bgUrl = this.props.isAlbum ? item.cover_photo.urls.thumb : item.urls.thumb;
       return (
         <li key={item.id} className={Style.item}>
-          <a href="#" style={{ backgroundImage: `url(${bgUrl})` }}>
+          <span
+            className={Style.thumb}
+            role="button"
+            tabIndex="0"
+            style={{ backgroundImage: `url(${bgUrl})` }}
+            onClick={() => { this.handleClick(`${item.id}`); }}
+            onKeyDown={() => { this.handleClick(`${item.id}`); }}
+          >
             {item.id}
-          </a>
-          {this.props.isAlbum && <span>{item.title}</span>}
+          </span>
+          {this.props.isAlbum && <span className={Style['album-title']}>{item.title}</span>}
         </li>
       );
     });

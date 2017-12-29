@@ -10,7 +10,6 @@ const promise = Fetch('collections/featured/?per_page=20');
 promise
   .then(response => response.json())
   .then((response) => {
-    // console.log(response);
     render(
       <App albumData={response} />,
       document.getElementById('root')
