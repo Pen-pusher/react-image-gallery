@@ -17,7 +17,7 @@ class App extends React.Component {
       photoData: props.photoData || []
     };
     this.handleBrowsing = this.handleBrowsing.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleLightbox = this.handleLightbox.bind(this);
   }
   handleBrowsing(id) {
     const getCollection = Fetch(`collections/${id}`);
@@ -31,8 +31,8 @@ class App extends React.Component {
       });
     });
   }
-  handleClick() {
-
+  handleLightbox(id) {
+    console.log(`lightbox: ${id}`);
   }
   render() {
     const copyrightYear = new Date().getFullYear();
@@ -53,10 +53,10 @@ class App extends React.Component {
           }
           <div className={Style.content}>
             {this.state.albumData.length > 0 &&
-              <Gallery items={this.state.albumData} isAlbum handleBrowsing={this.handleBrowsing} />
+              <Gallery items={this.state.albumData} isAlbum handleClick={this.handleBrowsing} />
             }
             {this.state.photoData.length > 0 &&
-              <Gallery items={this.state.photoData} handleClick={this.handleClick} />
+              <Gallery items={this.state.photoData} handleClick={this.handleLightbox} />
             }
           </div>
           <div className={Style.footer}>

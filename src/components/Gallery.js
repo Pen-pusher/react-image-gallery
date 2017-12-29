@@ -8,7 +8,7 @@ class Gallery extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(id) {
-    this.props.handleBrowsing(id);
+    this.props.handleClick(id);
   }
   render() {
     const el = this.props.items.map((item) => {
