@@ -23,11 +23,11 @@ class App extends React.Component {
     const getCollection = Fetch(`collections/${id}`);
     const getRelated = Fetch(`collections/${id}/related`);
     const getPhotos = Fetch(`collections/${id}/photos?per_page=20`);
-    Promise.all([getCollection, getRelated, getPhotos]).then((r) => {
+    Promise.all([getCollection, getRelated, getPhotos]).then((res) => {
       this.setState({
-        collection: r[0],
-        albumData: r[1],
-        photoData: r[2]
+        collection: res[0],
+        albumData: res[1],
+        photoData: res[2]
       });
     });
   }
