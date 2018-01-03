@@ -1,11 +1,11 @@
 import React from 'react';
 import { AppBar, Layout, Panel, Button } from 'react-toolbox';
 import Gallery from './Gallery';
+import Lightbox from './Lightbox';
 import Style from './App.css';
 import Fetch from '../Fetch';
 
 // React-Toolbox themeing
-import PanelTheme from '../css/PanelTheme.css';
 import AppBarTheme from '../css/AppBarTheme.css';
 
 class App extends React.Component {
@@ -14,10 +14,12 @@ class App extends React.Component {
     this.state = {
       collection: {},
       albumData: props.albumData || [],
-      photoData: props.photoData || []
+      photoData: props.photoData || [],
+      isLightboxActive: false
     };
     this.handleBrowsing = this.handleBrowsing.bind(this);
     this.handleLightbox = this.handleLightbox.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
   handleBrowsing(id) {
     const getCollection = Fetch(`collections/${id}`);
@@ -33,12 +35,18 @@ class App extends React.Component {
   }
   handleLightbox(id) {
     console.log(`lightbox: ${id}`);
+    this.setState({
+      isLightboxActive: true
+    });
+  }
+  handleScroll() {
+    console.log('scroll');
   }
   render() {
     const copyrightYear = new Date().getFullYear();
     return (
       <Layout>
-        <Panel theme={PanelTheme}>
+        <Panel theme={Style}>
           <AppBar title="React Image Gallery" theme={AppBarTheme} flat />
           {this.state.photoData.length > 0 &&
             <div className={Style['page-header']}>
@@ -65,6 +73,9 @@ class App extends React.Component {
             </div>
           </div>
         </Panel>
+        {this.state.isLightboxActive &&
+          <Lightbox />
+        }
       </Layout>
     );
   }
