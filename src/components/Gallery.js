@@ -8,18 +8,18 @@ class Gallery extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(id) {
-    this.props.handleClick(id);
+    this.props.onItemClick(id);
   }
   render() {
     const el = this.props.items.map((item) => {
-      const bgUrl = this.props.isAlbum ? item.cover_photo.urls.thumb : item.urls.thumb;
+      const thumbUrl = this.props.isAlbum ? item.cover_photo.urls.thumb : item.urls.thumb;
       return (
         <li key={item.id} className={Style.item}>
           <span
             className={Style.thumb}
             role="button"
             tabIndex="0"
-            style={{ backgroundImage: `url(${bgUrl})` }}
+            style={{ backgroundImage: `url(${thumbUrl})` }}
             onClick={() => { this.handleClick(`${item.id}`); }}
             onKeyDown={(event) => { if (event.which === 13) { this.handleClick(`${item.id}`); } }}
           >

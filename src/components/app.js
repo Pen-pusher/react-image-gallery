@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppBar, Layout, Panel, Button } from 'react-toolbox';
+import FontIcon from 'react-toolbox/lib/font_icon';
 import Gallery from './Gallery';
 import Lightbox from './Lightbox';
 import Style from './App.css';
@@ -8,6 +9,42 @@ import Fetch from '../Fetch';
 // React-Toolbox themeing
 import AppBarTheme from '../css/AppBarTheme.css';
 
+const Breadcrumbs = (props) => {
+  const { items } = props;
+  const el = items.filter((item, index) => {
+    console.log(index);
+    // Don't render the last path
+    if (index < items.length - 1) {
+      console.log("1");
+      return true;
+    }
+    console.log("2");
+    return false;
+  }).map((item) => {
+    const breadcrumbData = {
+      direction: 'parent',
+      id: item.id,
+      name: item.name
+    };
+    return (
+      <div key={item.id} className={Style.piece}>
+        <span
+          className={Style.name}
+          role="button"
+          tabIndex="0"
+          onClick={() => { props.handleNav(breadcrumbData); }}
+          onKeyDown={(event) => { if (event.which === 13) { props.handleNav(breadcrumbData); } }}
+        >
+          {item.name}
+        </span>
+        <FontIcon className={Style['chevron-right']} value="chevron_right" />
+      </div>
+    );
+  });
+
+  return <div className={Style.breadcrumbs}>{el}</div>;
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -15,13 +52,18 @@ class App extends React.Component {
       collection: {},
       albumData: props.albumData || [],
       photoData: props.photoData || [],
-      isLightboxActive: false
+      isLightboxActive: false,
+      breadcrumbs: [{
+        id: 0,
+        name: 'Home'
+      }]
     };
-    this.handleBrowsing = this.handleBrowsing.bind(this);
+    this.handleNav = this.handleNav.bind(this);
     this.handleLightbox = this.handleLightbox.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
   }
-  handleBrowsing(id) {
+  handleNav(id) {
+    // get new collection data
     const getCollection = Fetch(`collections/${id}`);
     const getRelated = Fetch(`collections/${id}/related`);
     const getPhotos = Fetch(`collections/${id}/photos?per_page=20`);
@@ -30,6 +72,11 @@ class App extends React.Component {
         collection: res[0],
         albumData: res[1],
         photoData: res[2]
+      });
+      // save new collection data to breadcrumbs
+      this.state.breadcrumbs.push({
+        id: id,
+        name: res[0].title
       });
     });
   }
@@ -50,6 +97,7 @@ class App extends React.Component {
           <AppBar title="React Image Gallery" theme={AppBarTheme} flat />
           {this.state.photoData.length > 0 &&
             <div className={Style['page-header']}>
+              {this.state.breadcrumbs.length > 0 && <Breadcrumbs items={this.state.breadcrumbs} />}
               <h1 className={Style.title}>
                 {this.state.collection.title}
               </h1>
@@ -60,11 +108,11 @@ class App extends React.Component {
             </div>
           }
           <div className={Style.content}>
-            {this.state.albumData.length > 0 &&
-              <Gallery items={this.state.albumData} isAlbum handleClick={this.handleBrowsing} />
+            {this.state.albumData.length > 1 &&
+              <Gallery items={this.state.albumData} isAlbum onItemClick={this.handleNav} />
             }
             {this.state.photoData.length > 0 &&
-              <Gallery items={this.state.photoData} handleClick={this.handleLightbox} />
+              <Gallery items={this.state.photoData} onItemClick={this.handleLightbox} />
             }
           </div>
           <div className={Style.footer}>
@@ -73,9 +121,7 @@ class App extends React.Component {
             </div>
           </div>
         </Panel>
-        {this.state.isLightboxActive &&
-          <Lightbox />
-        }
+        {this.state.isLightboxActive && <Lightbox /> }
       </Layout>
     );
   }
