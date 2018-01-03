@@ -21,7 +21,8 @@
   "scripts": {
     "start": "webpack-dev-server --open 'Google Chrome Canary'",
     "watch": "webpack --progress --watch",
-    "build": "webpack"
+    "build": "webpack",
+    "server": "webpack-dev-server"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
