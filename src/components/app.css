@@ -4,6 +4,7 @@
 .page-header {
   border-bottom: 1px solid rgba(0,0,0,.12);
   background-color: #FFF;
+  padding: 0 16px;
 }
 .content {
   flex: 1 0 0px;
