@@ -12,13 +12,10 @@ import AppBarTheme from '../css/AppBarTheme.css';
 const Breadcrumbs = (props) => {
   const { items } = props;
   const el = items.filter((item, index) => {
-    console.log(index);
     // Don't render the last path
     if (index < items.length - 1) {
-      console.log("1");
       return true;
     }
-    console.log("2");
     return false;
   }).map((item) => {
     const breadcrumbData = {
@@ -68,15 +65,15 @@ class App extends React.Component {
     const getRelated = Fetch(`collections/${id}/related`);
     const getPhotos = Fetch(`collections/${id}/photos?per_page=20`);
     Promise.all([getCollection, getRelated, getPhotos]).then((res) => {
-      this.setState({
-        collection: res[0],
-        albumData: res[1],
-        photoData: res[2]
-      });
       // save new collection data to breadcrumbs
       this.state.breadcrumbs.push({
         id: id,
         name: res[0].title
+      });
+      this.setState({
+        collection: res[0],
+        albumData: res[1],
+        photoData: res[2]
       });
     });
   }
