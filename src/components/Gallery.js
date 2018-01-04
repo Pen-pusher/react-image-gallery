@@ -31,7 +31,7 @@ class Gallery extends React.Component {
     });
     const type = this.props.isAlbum ? 'album' : 'photo';
     return (
-      <div>
+      <div className={Style['gallery-wrapper']}>
         <div className={Style.subtitle}>{this.props.isAlbum ? '相簿' : '照片'}</div>
         <div className={Style[`${type}`]}>
           <ul className={Style['list-group']}>{el}</ul>
