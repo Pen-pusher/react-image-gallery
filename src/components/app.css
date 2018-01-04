@@ -14,6 +14,9 @@
   margin: 16px 0;
   padding-left: 16px;
 }
+.actions button:last-child {
+  margin-left: 16px;
+}
 .footer {
   color: rgba(255,255,255,.7);
   background-color: #000;

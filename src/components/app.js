@@ -61,7 +61,7 @@ class App extends React.Component {
     };
     this.handleNav = this.handleNav.bind(this);
     this.handleLightbox = this.handleLightbox.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
+    // this.handleScroll = this.handleScroll.bind(this);
   }
   handleNav(id, goBack) {
     if (id) {
@@ -118,9 +118,9 @@ class App extends React.Component {
     });
   }
 
-  handleScroll() {
-    console.log('scroll');
-  }
+  // handleScroll() {
+  //   console.log('scroll');
+  // }
 
   render() {
     const copyrightYear = new Date().getFullYear();
