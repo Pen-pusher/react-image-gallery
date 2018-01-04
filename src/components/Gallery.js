@@ -1,14 +1,23 @@
 import React from 'react';
+import { Button } from 'react-toolbox';
 import Style from './Gallery.css';
 
 class Gallery extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(props.items);
-    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      teaser: true
+    };
+    this.handleItemClick = this.handleItemClick.bind(this);
+    this.teaserExpand = this.teaserExpand.bind(this);
   }
-  handleClick(id) {
+  handleItemClick(id) {
     this.props.onItemClick(id);
+  }
+  teaserExpand() {
+    this.setState({
+      teaser: false
+    });
   }
   render() {
     const el = this.props.items.map((item) => {
@@ -20,8 +29,8 @@ class Gallery extends React.Component {
             role="button"
             tabIndex="0"
             style={{ backgroundImage: `url(${thumbUrl})` }}
-            onClick={() => { this.handleClick(`${item.id}`); }}
-            onKeyDown={(event) => { if (event.which === 13) { this.handleClick(`${item.id}`); } }}
+            onClick={() => { this.handleItemClick(`${item.id}`); }}
+            onKeyDown={(event) => { if (event.which === 13) { this.handleItemClick(`${item.id}`); } }}
           >
             {item.id}
           </span>
@@ -30,12 +39,22 @@ class Gallery extends React.Component {
       );
     });
     const type = this.props.isAlbum ? 'album' : 'photo';
+    const classArray = [Style[type]];
+    if (this.state.teaser) {
+      classArray.push(Style.tease);
+    }
+    const classes = classArray.join(' ');
     return (
       <div className={Style['gallery-wrapper']}>
         <div className={Style.subtitle}>{this.props.isAlbum ? '相簿' : '照片'}</div>
-        <div className={Style[`${type}`]}>
+        <div className={classes}>
           <ul className={Style['list-group']}>{el}</ul>
         </div>
+        {this.state.teaser &&
+          <div className={Style.teaser}>
+            <Button label="全部顯示" flat onClick={this.teaserExpand} />
+          </div>        
+        }
       </div>
     );
   }

@@ -1,4 +1,8 @@
 .panel {
+  font-family:
+  system, -apple-system, BlinkMacSystemFont,
+  "PingFang TC", "Segoe UI", "Microsoft YaHei", "wenquanyi micro hei", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+  "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #FAFAFA;
 }
 .page-header {
