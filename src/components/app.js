@@ -11,6 +11,9 @@ import AppBarTheme from '../css/AppBarTheme.css';
 
 const Breadcrumbs = (props) => {
   const { items } = props;
+  const handleClick = (crumb) => {
+    props.onCrumbClick(crumb.id, true);
+  };
   const el = items.filter((item, index) => {
     // Don't render the last path
     if (index < items.length - 1) {
@@ -18,19 +21,18 @@ const Breadcrumbs = (props) => {
     }
     return false;
   }).map((item) => {
-    const breadcrumbData = {
-      direction: 'parent',
+    const crumb = {
       id: item.id,
       name: item.name
     };
     return (
-      <div key={item.id} className={Style.piece}>
+      <div key={item.id} className={Style.crumb}>
         <span
           className={Style.name}
           role="button"
           tabIndex="0"
-          onClick={() => { props.handleNav(breadcrumbData); }}
-          onKeyDown={(event) => { if (event.which === 13) { props.handleNav(breadcrumbData); } }}
+          onClick={() => { handleClick(crumb); }}
+          onKeyDown={(event) => { if (event.which === 13) { handleClick(crumb); } }}
         >
           {item.name}
         </span>
@@ -38,6 +40,8 @@ const Breadcrumbs = (props) => {
       </div>
     );
   });
+  // scroll page to top
+  window.scroll(0, 0);
 
   return <div className={Style.breadcrumbs}>{el}</div>;
 };
@@ -59,33 +63,65 @@ class App extends React.Component {
     this.handleLightbox = this.handleLightbox.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
   }
-  handleNav(id) {
-    // get new collection data
-    const getCollection = Fetch(`collections/${id}`);
-    const getRelated = Fetch(`collections/${id}/related`);
-    const getPhotos = Fetch(`collections/${id}/photos?per_page=20`);
-    Promise.all([getCollection, getRelated, getPhotos]).then((res) => {
-      // save new collection data to breadcrumbs
-      this.state.breadcrumbs.push({
-        id: id,
-        name: res[0].title
+  handleNav(id, goBack) {
+    if (id) {
+      // get new collection data
+      const getCollection = Fetch(`collections/${id}`);
+      const getRelated = Fetch(`collections/${id}/related`);
+      const getPhotos = Fetch(`collections/${id}/photos?per_page=20`);
+      Promise.all([getCollection, getRelated, getPhotos]).then((res) => {
+        const newAlbum = {
+          collection: res[0],
+          albumData: res[1],
+          photoData: res[2]
+        };
+        if (goBack) {
+          // user clicks breadcrumbs links
+          // remove all links after the clicked one
+          const array = this.state.breadcrumbs;
+          // get the index of the clicked link
+          const index = array.findIndex(el => el.id === id);
+          // remove all links after this index
+          array.splice(index + 1);
+        } else {
+          // user clicks album
+          // save new collection data to breadcrumbs
+          this.state.breadcrumbs.push({
+            id,
+            name: res[0].title
+          });
+        }
+        // update current album data
+        this.setState(newAlbum);
       });
-      this.setState({
-        collection: res[0],
-        albumData: res[1],
-        photoData: res[2]
+    } else {
+      // user clicks on Home link
+      // remove all breadcrumb links except Home
+      this.state.breadcrumbs.splice(1);
+      Fetch('collections/featured/?per_page=20').then((res) => {
+        const home = {
+          collection: {},
+          albumData: res,
+          photoData: []
+        };
+        this.setState(home);
       });
-    });
+    }
+    // scroll page to top
+    window.scroll(0, 0);  
   }
+
   handleLightbox(id) {
     console.log(`lightbox: ${id}`);
     this.setState({
       isLightboxActive: true
     });
   }
+
   handleScroll() {
     console.log('scroll');
   }
+
   render() {
     const copyrightYear = new Date().getFullYear();
     return (
@@ -94,7 +130,9 @@ class App extends React.Component {
           <AppBar title="React Image Gallery" theme={AppBarTheme} flat />
           {this.state.photoData.length > 0 &&
             <div className={Style['page-header']}>
-              {this.state.breadcrumbs.length > 0 && <Breadcrumbs items={this.state.breadcrumbs} />}
+              {this.state.breadcrumbs.length > 0 &&
+                <Breadcrumbs items={this.state.breadcrumbs} onCrumbClick={this.handleNav} />
+              }
               <h1 className={Style.title}>
                 {this.state.collection.title}
               </h1>
