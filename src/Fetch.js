@@ -9,9 +9,6 @@ const Fetch = (pathname) => {
   };
   return fetch(fetchUrl, init)
     .then(res => res.json())
-    .then((res) => {
-      return res;
-    })
     .catch((err) => {
       console.log(err);
     });
