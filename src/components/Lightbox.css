@@ -53,10 +53,22 @@
   justify-content: center;
 }
 
-.prev {
+.chevron {
+  color: #FFF;
+  padding: 10px;
+  background-color: rgba(0,0,0,.3);
+  border-radius: 50%;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
+.prev {
+  composes: chevron;
+  left: 16px;
 }
 
 .next {
-
+  composes: chevron;
+  right: 16px;
 }
