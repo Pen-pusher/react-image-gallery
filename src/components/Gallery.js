@@ -6,7 +6,7 @@ class Gallery extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      teaser: true
+      hasTeaserButton: true
     };
     this.handleItemClick = this.handleItemClick.bind(this);
     this.teaserExpand = this.teaserExpand.bind(this);
@@ -16,12 +16,12 @@ class Gallery extends React.Component {
   }
   teaserExpand() {
     this.setState({
-      teaser: false
+      hasTeaserButton: false
     });
   }
   render() {
     const el = this.props.items.map((item) => {
-      const thumbUrl = this.props.isAlbum ? item.cover_photo.urls.thumb : item.urls.thumb;
+      const thumbUrl = this.props.isAlbumLayout ? item.cover_photo.urls.thumb : item.urls.thumb;
       return (
         <li key={item.id} className={Style.item}>
           <span
@@ -34,11 +34,11 @@ class Gallery extends React.Component {
           >
             {item.id}
           </span>
-          {this.props.isAlbum && <span className={Style['album-title']}>{item.title}</span>}
+          {this.props.isAlbumLayout && <span className={Style['album-title']}>{item.title}</span>}
         </li>
       );
     });
-    const type = this.props.isAlbum ? 'album' : 'photo';
+    const type = this.props.isAlbumLayout ? 'album' : 'photo';
     const classArray = [Style[type]];
     if (this.state.teaser) {
       classArray.push(Style.tease);
@@ -46,11 +46,11 @@ class Gallery extends React.Component {
     const classes = classArray.join(' ');
     return (
       <div className={Style['gallery-wrapper']}>
-        <div className={Style.subtitle}>{this.props.isAlbum ? '相簿' : '照片'}</div>
+        <div className={Style.subtitle}>{this.props.isAlbumLayout ? '相簿' : '照片'}</div>
         <div className={classes}>
           <ul className={Style['list-group']}>{el}</ul>
         </div>
-        {this.state.teaser &&
+        {this.state.hasTeaserButton &&
           <div className={Style.teaser}>
             <Button label="全部顯示" flat onClick={this.teaserExpand} />
           </div>        
