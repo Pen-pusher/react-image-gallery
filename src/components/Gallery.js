@@ -20,8 +20,9 @@ class Gallery extends React.Component {
     });
   }
   render() {
-    const el = this.props.items.map((item) => {
+    const el = this.props.items.map((item, index) => {
       const thumbUrl = this.props.isAlbumLayout ? item.cover_photo.urls.thumb : item.urls.thumb;
+      const onClickCallbackArgument = this.props.isAlbumLayout ? item.id : index;
       return (
         <li key={item.id} className={Style.item}>
           <span
@@ -29,8 +30,8 @@ class Gallery extends React.Component {
             role="button"
             tabIndex="0"
             style={{ backgroundImage: `url(${thumbUrl})` }}
-            onClick={() => { this.handleItemClick(`${item.id}`); }}
-            onKeyDown={(event) => { if (event.which === 13) { this.handleItemClick(`${item.id}`); } }}
+            onClick={() => { this.handleItemClick(`${onClickCallbackArgument}`); }}
+            onKeyDown={(event) => { if (event.which === 13) { this.handleItemClick(`${onClickCallbackArgument}`); } }}
           >
             {item.id}
           </span>
