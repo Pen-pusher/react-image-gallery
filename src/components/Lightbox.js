@@ -20,13 +20,31 @@ class Lightbox extends React.Component {
   render() {
     return (
       <div className={Style.lightbox}>
-      <Slides />
+        <Slides slides={this.props.slides} active={this.state.active.index} />
         <div className={Style['tool-bar']}>
-          <div>layout test</div>
+          <div className={Style.fixed} />
+          <div className={Style.fill}>
+            <div className={Style.icon}>
+              <FontIcon value="play_arrow" />
+            </div>
+          </div>
+          <div className={Style.fixed}>
+            <div className={Style.icon}>
+              <FontIcon value="share" />
+            </div>
+            <div className={Style.icon}>
+              <FontIcon value="file_download" />
+            </div>
+            <div className={Style.icon}>
+              <FontIcon value="close" />
+            </div>
+          </div>
         </div>
-        <div className={Style['description-bar']}>
-          <div>{this.state.active.description}</div>
-        </div>
+        {this.state.active.description &&
+          <div className={Style['description-bar']}>
+            <div>{this.state.active.description}</div>
+          </div>
+        }
         <div className={Style.prev}>
           <FontIcon value="chevron_left" />
         </div>

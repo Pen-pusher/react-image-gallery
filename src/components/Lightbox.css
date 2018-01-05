@@ -6,12 +6,53 @@
   bottom: 0;
   right: 0;
 }
+
+.bar {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0,0,0,.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  color: #FFF;
+}
+
 .tool-bar {
-
+  composes: bar;
+  top: 0;
 }
+
 .description-bar {
-
+  composes: bar;
+  bottom: 0;
 }
+
+.icon {
+  font-size: 0;
+  display: inline-block;
+  padding: 8px;
+}
+
+.fixed {
+  width: 136px;
+  padding-right: 16px;
+  justify-content: space-between;
+}
+
+@media screen and (min-device-width: 375px) {
+  .fixed {
+    width: 148px;
+  }
+}
+
+.fill {
+  display: flex;
+  flex: 1 1 0px;
+  justify-content: center;
+}
+
 .prev {
 
 }
