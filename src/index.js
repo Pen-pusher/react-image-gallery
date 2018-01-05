@@ -10,7 +10,7 @@ Fetch('collections/featured/?per_page=20').then((res) => {
     console.log('not ok');
   } else {
     render(
-      <App albumData={res} />,
+      <App albums={res} />,
       document.getElementById('root')
     );
   }

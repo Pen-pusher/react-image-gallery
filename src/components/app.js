@@ -51,14 +51,15 @@ class App extends React.Component {
     super(props);
     this.state = {
       collection: {},
-      albumData: props.albumData || [],
-      photoData: props.photoData || [],
+      albums: props.albums || [],
+      photos: props.photos || [],
       isLightboxActive: false,
       breadcrumbs: [{
         id: 0,
         name: 'Home'
       }]
     };
+    this.index = 0;
     this.handleNav = this.handleNav.bind(this);
     this.handleLightbox = this.handleLightbox.bind(this);
     // this.handleScroll = this.handleScroll.bind(this);
@@ -70,11 +71,6 @@ class App extends React.Component {
       const getRelated = Fetch(`collections/${id}/related`);
       const getPhotos = Fetch(`collections/${id}/photos?per_page=20`);
       Promise.all([getCollection, getRelated, getPhotos]).then((res) => {
-        const newAlbum = {
-          collection: res[0],
-          albumData: res[1],
-          photoData: res[2]
-        };
         if (goBack) {
           // user clicks breadcrumbs links
           // remove all links after the clicked one
@@ -91,28 +87,32 @@ class App extends React.Component {
             name: res[0].title
           });
         }
-        // update current album data
-        this.setState(newAlbum);
+        // update page
+        this.setState({
+          collection: res[0],
+          albums: res[1],
+          photos: res[2]
+        });
       });
     } else {
       // user clicks on Home link
       // remove all breadcrumb links except Home
       this.state.breadcrumbs.splice(1);
       Fetch('collections/featured/?per_page=20').then((res) => {
-        const home = {
+        this.setState({
           collection: {},
-          albumData: res,
-          photoData: []
-        };
-        this.setState(home);
+          albums: res,
+          photos: []
+        });
       });
     }
     // scroll page to top
-    window.scroll(0, 0);  
+    window.scroll(0, 0);
   }
 
   handleLightbox(id) {
     console.log(`lightbox: ${id}`);
+    this.index = id;
     this.setState({
       isLightboxActive: true
     });
@@ -128,7 +128,7 @@ class App extends React.Component {
       <Layout>
         <Panel theme={Style}>
           <AppBar title="React Image Gallery" theme={AppBarTheme} flat />
-          {this.state.photoData.length > 0 &&
+          {this.state.photos.length > 0 &&
             <div className={Style['page-header']}>
               {this.state.breadcrumbs.length > 0 &&
                 <Breadcrumbs items={this.state.breadcrumbs} onCrumbClick={this.handleNav} />
@@ -143,11 +143,11 @@ class App extends React.Component {
             </div>
           }
           <div className={Style.content}>
-            {this.state.albumData.length > 1 &&
-              <Gallery items={this.state.albumData} isAlbumLayout onItemClick={this.handleNav} />
+            {this.state.albums.length > 1 &&
+              <Gallery items={this.state.albums} isAlbumLayout onItemClick={this.handleNav} />
             }
-            {this.state.photoData.length > 0 &&
-              <Gallery items={this.state.photoData} onItemClick={this.handleLightbox} />
+            {this.state.photos.length > 0 &&
+              <Gallery items={this.state.photos} onItemClick={this.handleLightbox} />
             }
           </div>
           <div className={Style.footer}>
@@ -156,7 +156,7 @@ class App extends React.Component {
             </div>
           </div>
         </Panel>
-        {this.state.isLightboxActive && <Lightbox /> }
+        {this.state.isLightboxActive && <Lightbox slides={this.state.photos} index={this.index} /> }
       </Layout>
     );
   }
