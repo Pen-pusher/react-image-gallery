@@ -83,7 +83,7 @@ class Lightbox extends React.Component {
           role="button"
           tabIndex="0"
           onClick={() => this.handleSlidesUpdate(-1)}
-          onKeyDown={event => event.which === 13 && this.handleSlidesUpdate(-1)}
+          onKeyDown={event => event.which === 13 && this.handleSlidesUpdate(-1, event)}
         >
           <FontIcon value="chevron_left" />
         </div>
@@ -92,7 +92,7 @@ class Lightbox extends React.Component {
           role="button"
           tabIndex="0"
           onClick={() => this.handleSlidesUpdate(1)}
-          onKeyDown={event => event.which === 13 && this.handleSlidesUpdate(1)}
+          onKeyDown={event => event.which === 13 && this.handleSlidesUpdate(1, event)}
         >
           <FontIcon value="chevron_right" />
         </div>
