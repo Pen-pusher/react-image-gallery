@@ -16,10 +16,33 @@ class Lightbox extends React.Component {
       }
     };
     this.onClose = this.onClose.bind(this);
+    this.handleSlidesUpdate = this.handleSlidesUpdate.bind(this);
   }
 
   onClose() {
     this.props.onItemClick();
+  }
+
+  handleSlidesUpdate(int) {
+    // change the active slide index
+    const prevIndex = parseInt(this.state.active.index, 10);
+    // check if next index number will exceeds data length
+    const condition = prevIndex + int <= this.length - 1 && prevIndex + int >= 0;
+    if (condition) {
+      const nextIndex = prevIndex + int;
+      this.setState({
+        active: {
+          index: nextIndex,
+          description: this.props.slides[nextIndex].description,
+          link: this.props.slides[nextIndex].links.html,
+          download: this.props.slides[nextIndex].links.download
+        }
+      });
+    } else {
+      // stop slide autoplay when reaches the end of slides
+      // then clear timer
+      // this.stopAutoplay(this.state.autoplayTimerId);
+    } 
   }
   render() {
     return (
@@ -55,10 +78,22 @@ class Lightbox extends React.Component {
             <div>{this.state.active.description}</div>
           </div>
         }
-        <div className={Style.prev}>
+        <div
+          className={Style.prev}
+          role="button"
+          tabIndex="0"
+          onClick={() => this.handleSlidesUpdate(-1)}
+          onKeyDown={event => event.which === 13 && this.handleSlidesUpdate(-1)}
+        >
           <FontIcon value="chevron_left" />
         </div>
-        <div className={Style.next}>
+        <div
+          className={Style.next}
+          role="button"
+          tabIndex="0"
+          onClick={() => this.handleSlidesUpdate(1)}
+          onKeyDown={event => event.which === 13 && this.handleSlidesUpdate(1)}
+        >
           <FontIcon value="chevron_right" />
         </div>
       </div>
