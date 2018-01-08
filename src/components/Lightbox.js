@@ -15,8 +15,12 @@ class Lightbox extends React.Component {
         download: props.slides[props.index].links.download
       }
     };
+    this.onClose = this.onClose.bind(this);
   }
 
+  onClose() {
+    this.props.onItemClick();
+  }
   render() {
     return (
       <div className={Style.lightbox}>
@@ -35,7 +39,13 @@ class Lightbox extends React.Component {
             <div className={Style.icon}>
               <FontIcon value="file_download" />
             </div>
-            <div className={Style.icon}>
+            <div
+              className={Style.icon}
+              role="button"
+              tabIndex="0"
+              onClick={this.onClose}
+              onKeyDown={event => event.which === 13 && this.onClose}
+            >
               <FontIcon value="close" />
             </div>
           </div>
