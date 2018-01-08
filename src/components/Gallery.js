@@ -30,8 +30,8 @@ class Gallery extends React.Component {
             role="button"
             tabIndex="0"
             style={{ backgroundImage: `url(${thumbUrl})` }}
-            onClick={() => { this.handleItemClick(`${onClickCallbackArgument}`); }}
-            onKeyDown={(event) => { if (event.which === 13) { this.handleItemClick(`${onClickCallbackArgument}`); } }}
+            onClick={() => this.handleItemClick(`${onClickCallbackArgument}`)}
+            onKeyDown={event => event.which === 13 && this.handleItemClick(`${onClickCallbackArgument}`)}
           >
             {item.id}
           </span>
