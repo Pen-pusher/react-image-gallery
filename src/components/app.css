@@ -42,3 +42,8 @@
 .chevron-right {
   vertical-align: middle;
 }
+.btt {
+  position: fixed;
+  bottom: 32px;
+  right: 16px;
+}

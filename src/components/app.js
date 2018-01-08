@@ -5,6 +5,7 @@ import Gallery from './Gallery';
 import Lightbox from './Lightbox';
 import Style from './App.css';
 import Fetch from '../Fetch';
+import ScrollIt from '../ScrollIt';
 
 // React-Toolbox themeing
 import AppBarTheme from '../css/AppBarTheme.css';
@@ -47,6 +48,10 @@ const Breadcrumbs = (props) => {
 };
 
 class App extends React.Component {
+  static backToTop() {
+    ScrollIt(0);
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -57,13 +62,20 @@ class App extends React.Component {
       breadcrumbs: [{
         id: 0,
         name: 'Home'
-      }]
+      }],
+      hasBackToTopButton: false
     };
     this.activeSlideIndex = 0;
     this.handleNavigate = this.handleNavigate.bind(this);
     this.handleLightboxActive = this.handleLightboxActive.bind(this);
-    // this.handleScroll = this.handleScroll.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
+
+  componentDidMount() {
+    // add listener to track scroll event
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
   handleNavigate(id, goBack) {
     if (id) {
       // get new collection data
@@ -120,9 +132,24 @@ class App extends React.Component {
     });
   }
 
-  // handleScroll() {
-  //   console.log('scroll');
-  // }
+  handleScroll() {
+    console.log('scroll');
+    // show back-to-top button when scrolled down pass 300px
+    if (this.state.hasBackToTopButton) {
+      if (window.scrollY <= 300) {
+        this.setState({
+          hasBackToTopButton: false
+        });
+      }
+    } else {
+      if (window.scrollY > 300) {
+        this.setState({
+          hasBackToTopButton: true
+        });
+      }
+    }
+  }
+
 
   render() {
     const copyrightYear = new Date().getFullYear();
@@ -163,6 +190,16 @@ class App extends React.Component {
             slides={this.state.photos}
             index={this.activeSlideIndex}
             onItemClick={this.handleLightboxActive}
+          />
+        }
+        {this.state.hasBackToTopButton &&
+          <Button
+            primary
+            floating
+            mini
+            icon="arrow_upward"
+            className={Style.btt}
+            onClick={App.backToTop}
           />
         }
       </Layout>
