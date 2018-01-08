@@ -15,6 +15,7 @@ class Lightbox extends React.Component {
         download: props.slides[props.index].links.download
       }
     };
+    this.length = props.slides.length;
     this.onClose = this.onClose.bind(this);
     this.handleSlidesUpdate = this.handleSlidesUpdate.bind(this);
   }
@@ -78,24 +79,28 @@ class Lightbox extends React.Component {
             <div>{this.state.active.description}</div>
           </div>
         }
-        <div
-          className={Style.prev}
-          role="button"
-          tabIndex="0"
-          onClick={() => this.handleSlidesUpdate(-1)}
-          onKeyDown={event => event.which === 13 && this.handleSlidesUpdate(-1, event)}
-        >
-          <FontIcon value="chevron_left" />
-        </div>
-        <div
-          className={Style.next}
-          role="button"
-          tabIndex="0"
-          onClick={() => this.handleSlidesUpdate(1)}
-          onKeyDown={event => event.which === 13 && this.handleSlidesUpdate(1, event)}
-        >
-          <FontIcon value="chevron_right" />
-        </div>
+        {parseInt(this.state.active.index, 10) > 0 &&
+          <div
+            className={Style.prev}
+            role="button"
+            tabIndex="0"
+            onClick={() => this.handleSlidesUpdate(-1)}
+            onKeyDown={event => event.which === 13 && this.handleSlidesUpdate(-1, event)}
+          >
+            <FontIcon value="chevron_left" />
+          </div>
+        }
+        {parseInt(this.state.active.index, 10) < this.length - 1 &&
+          <div
+            className={Style.next}
+            role="button"
+            tabIndex="0"
+            onClick={() => this.handleSlidesUpdate(1)}
+            onKeyDown={event => event.which === 13 && this.handleSlidesUpdate(1, event)}
+          >
+            <FontIcon value="chevron_right" />
+          </div>
+        }
       </div>
     );
   }

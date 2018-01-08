@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: nowrap;
   height: 100vh;
-  transform: transform .3s ease-out;
+  transition: transform .3s ease-out;
 }
 
 .slide {

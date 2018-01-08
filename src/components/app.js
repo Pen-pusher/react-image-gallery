@@ -112,7 +112,6 @@ class App extends React.Component {
 
   // toggle lightbox
   handleLightboxActive(index) {
-    console.log(`lightbox: ${index}`);
     if (!this.state.isLightboxActive) {
       this.activeSlideIndex = index;
     }
@@ -160,7 +159,11 @@ class App extends React.Component {
           </div>
         </Panel>
         {this.state.isLightboxActive &&
-          <Lightbox slides={this.state.photos} index={this.activeSlideIndex} />
+          <Lightbox
+            slides={this.state.photos}
+            index={this.activeSlideIndex}
+            onItemClick={this.handleLightboxActive}
+          />
         }
       </Layout>
     );
