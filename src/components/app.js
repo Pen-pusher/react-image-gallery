@@ -66,12 +66,12 @@ class App extends React.Component {
     this.activeSlideIndex = 0;
     this.handleNavigate = this.handleNavigate.bind(this);
     this.handleLightboxActive = this.handleLightboxActive.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
+    this.handlePageScroll = this.handlePageScroll.bind(this);
   }
 
   componentDidMount() {
     // add listener to track scroll event
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handlePageScroll);
   }
 
   handleNavigate(id, goBack) {
@@ -130,19 +130,18 @@ class App extends React.Component {
     });
   }
 
-  handleScroll() {
-    console.log('scroll');
+  handlePageScroll() {
     // show back-to-top button when scrolled down pass 300px
-    if (this.state.hasBackToTopButton) {
-      if (window.scrollY <= 300) {
-        this.setState({
-          hasBackToTopButton: false
-        });
-      }
-    } else {
-      if (window.scrollY > 300) {
+    if (window.scrollY > 300) {
+      if (!this.state.hasBackToTopButton) {
         this.setState({
           hasBackToTopButton: true
+        });
+      }
+    } else if (window.scrollY <= 300) {
+      if (this.state.hasBackToTopButton) {
+        this.setState({
+          hasBackToTopButton: false
         });
       }
     }
