@@ -59,7 +59,7 @@ class App extends React.Component {
         name: 'Home'
       }]
     };
-    this.index = 0;
+    this.activeSlideIndex = 0;
     this.handleNav = this.handleNav.bind(this);
     this.handleLightbox = this.handleLightbox.bind(this);
     // this.handleScroll = this.handleScroll.bind(this);
@@ -110,11 +110,13 @@ class App extends React.Component {
     window.scroll(0, 0);
   }
 
-  handleLightbox(id) {
-    console.log(`lightbox: ${id}`);
-    this.index = id;
+  handleLightbox(index) {
+    console.log(`lightbox: ${index}`);
+    if (!this.state.isLightboxActive) {
+      this.activeSlideIndex = index;
+    }
     this.setState({
-      isLightboxActive: true
+      isLightboxActive: !this.state.isLightboxActive
     });
   }
 
@@ -156,7 +158,9 @@ class App extends React.Component {
             </div>
           </div>
         </Panel>
-        {this.state.isLightboxActive && <Lightbox slides={this.state.photos} index={this.index} /> }
+        {this.state.isLightboxActive &&
+          <Lightbox slides={this.state.photos} index={this.activeSlideIndex} />
+        }
       </Layout>
     );
   }
