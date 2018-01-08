@@ -41,8 +41,6 @@ const Breadcrumbs = (props) => {
       </div>
     );
   });
-  // scroll page to top
-  window.scroll(0, 0);
 
   return <div className={Style.breadcrumbs}>{el}</div>;
 };
