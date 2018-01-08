@@ -60,11 +60,11 @@ class App extends React.Component {
       }]
     };
     this.activeSlideIndex = 0;
-    this.handleNav = this.handleNav.bind(this);
-    this.handleLightbox = this.handleLightbox.bind(this);
+    this.handleNavigate = this.handleNavigate.bind(this);
+    this.handleLightboxActive = this.handleLightboxActive.bind(this);
     // this.handleScroll = this.handleScroll.bind(this);
   }
-  handleNav(id, goBack) {
+  handleNavigate(id, goBack) {
     if (id) {
       // get new collection data
       const getCollection = Fetch(`collections/${id}`);
@@ -110,7 +110,8 @@ class App extends React.Component {
     window.scroll(0, 0);
   }
 
-  handleLightbox(index) {
+  // toggle lightbox
+  handleLightboxActive(index) {
     console.log(`lightbox: ${index}`);
     if (!this.state.isLightboxActive) {
       this.activeSlideIndex = index;
@@ -133,7 +134,7 @@ class App extends React.Component {
           {this.state.photos.length > 0 &&
             <div className={Style['page-header']}>
               {this.state.breadcrumbs.length > 0 &&
-                <Breadcrumbs items={this.state.breadcrumbs} onCrumbClick={this.handleNav} />
+                <Breadcrumbs items={this.state.breadcrumbs} onCrumbClick={this.handleNavigate} />
               }
               <h1 className={Style.title}>
                 {this.state.collection.title}
@@ -146,10 +147,10 @@ class App extends React.Component {
           }
           <div className={Style.content}>
             {this.state.albums.length > 1 &&
-              <Gallery items={this.state.albums} isAlbumLayout onItemClick={this.handleNav} />
+              <Gallery items={this.state.albums} isAlbumLayout onItemClick={this.handleNavigate} />
             }
             {this.state.photos.length > 0 &&
-              <Gallery items={this.state.photos} onItemClick={this.handleLightbox} />
+              <Gallery items={this.state.photos} onItemClick={this.handleLightboxActive} />
             }
           </div>
           <div className={Style.footer}>
