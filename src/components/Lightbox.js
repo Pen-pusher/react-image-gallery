@@ -13,11 +13,15 @@ class Lightbox extends React.Component {
         description: props.slides[props.index].description,
         link: props.slides[props.index].links.html,
         download: props.slides[props.index].links.download
-      }
+      },
+      autoplayTimer: null
     };
     this.length = props.slides.length;
     this.onClose = this.onClose.bind(this);
     this.handleSlidesUpdate = this.handleSlidesUpdate.bind(this);
+    this.handleSlidesAutoplay = this.handleSlidesAutoplay.bind(this);
+    this.startAutoplay = this.startAutoplay.bind(this);
+    this.stopAutoplay = this.stopAutoplay.bind(this);
   }
 
   onClose() {
@@ -40,20 +44,59 @@ class Lightbox extends React.Component {
         }
       });
     } else {
-      // stop slide autoplay when reaches the end of slides
-      // then clear timer
-      // this.stopAutoplay(this.state.autoplayTimerId);
-    } 
+      // stop slides autoplay when reaches the last slide
+      // clear autoplay timer
+      this.stopAutoplay(this.state.autoplayTimer);
+    }
   }
+
+  handleSlidesAutoplay() {
+    if (this.state.autoplayTimer) {
+      // stop autoplay, pause
+      this.stopAutoplay();
+    } else {
+      // start autoplay
+      this.startAutoplay();
+    }
+  }
+
+  startAutoplay() {
+    this.setState({
+      autoplayTimer: setInterval(() => this.handleSlidesUpdate(1), 5000)
+    });
+  }
+
+  stopAutoplay() {
+    // check if autoplay is still going
+    if (this.state.autoplayTimer) {
+      clearInterval(this.state.autoplayTimer);
+      this.setState({
+        autoplayTimer: null
+      });
+    }
+  }
+
   render() {
     return (
       <div className={Style.lightbox}>
-        <Slides slides={this.props.slides} active={this.state.active.index} />
+        <Slides
+          slides={this.props.slides}
+          active={this.state.active.index}
+          handleAutoplay={this.handleSlidesAutoplay}
+          handleUpdate={this.handleSlidesUpdate}
+          autoplayTimer={this.autoplayTimer}
+        />
         <div className={Style['tool-bar']}>
           <div className={Style.fixed} />
           <div className={Style.fill}>
-            <div className={Style.icon}>
-              <FontIcon value="play_arrow" />
+            <div
+              className={Style.icon}
+              role="button"
+              tabIndex="0"
+              onClick={this.handleSlidesAutoplay}
+              onKeyDown={event => event.which === 13 && this.handleSlidesAutoplay}
+            >
+              <FontIcon value={this.state.autoplayTimer ? 'pause' : 'play_arrow'} />
             </div>
           </div>
           <div className={Style.fixed}>
