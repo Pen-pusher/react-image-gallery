@@ -64,6 +64,7 @@ class App extends React.Component {
       hasBackToTopButton: false
     };
     this.activeSlideIndex = 0;
+    this.scrollY = 0;
     this.handleNavigate = this.handleNavigate.bind(this);
     this.handleLightboxActive = this.handleLightboxActive.bind(this);
     this.handlePageScroll = this.handlePageScroll.bind(this);
@@ -72,6 +73,13 @@ class App extends React.Component {
   componentDidMount() {
     // add listener to track scroll event
     window.addEventListener('scroll', this.handlePageScroll);
+  }
+
+  componentDidUpdate(prevProps, prevStates) {
+    // Restore scroll position when lightbox unmount
+    if (prevStates.isLightboxActive) {
+      window.scroll(0, this.scrollY);
+    }
   }
 
   handleNavigate(id, goBack) {
@@ -103,6 +111,8 @@ class App extends React.Component {
           albums: res[1],
           photos: res[2]
         });
+        // scroll page to top
+        window.scroll(0, 0);
       });
     } else {
       // user clicks on Home link
@@ -114,15 +124,19 @@ class App extends React.Component {
           albums: res,
           photos: []
         });
+        // scroll page to top
+        window.scroll(0, 0);
       });
     }
-    // scroll page to top
-    window.scroll(0, 0);
   }
 
   // toggle lightbox
   handleLightboxActive(index) {
     if (!this.state.isLightboxActive) {
+      // if lightbox is closed
+      // set clicked photo index number
+      // and get window scroll position
+      this.scrollY = window.scrollY;
       this.activeSlideIndex = index;
     }
     this.setState({
@@ -147,11 +161,13 @@ class App extends React.Component {
     }
   }
 
-
   render() {
     const copyrightYear = new Date().getFullYear();
     return (
-      <Layout>
+      <Layout
+        className={this.state.isLightboxActive ? Style.fixed : null}
+        style={this.state.isLightboxActive ? { top: `-${this.scrollY}px` } : null}
+      >
         <Panel theme={Style}>
           <AppBar title="React Image Gallery" theme={AppBarTheme} flat />
           {this.state.photos.length > 0 &&
