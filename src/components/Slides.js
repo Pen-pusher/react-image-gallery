@@ -38,13 +38,11 @@ class Slides extends React.Component {
   }
 
   render() {
-    const el = this.props.slides.map((slide) => {
-      return (
-        <div className={Style.slide} key={slide.id}>
-          <img src={slide.urls.regular} />
-        </div>
-      );
-    });
+    const el = this.props.slides.map(slide => (
+      <div className={Style.slide} key={slide.id}>
+        <img src={slide.urls.regular} alt={slide.description} />
+      </div>
+    ));
     const newStyle = { transform: `translate3d(${this.state.movex},0px,0px)` };
     return (
       <div
