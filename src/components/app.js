@@ -186,7 +186,7 @@ class App extends React.Component {
           }
           <div className={Style.content}>
             {this.state.albums.length > 1 &&
-              <Gallery items={this.state.albums} isAlbumLayout onItemClick={this.handleNavigate} />
+              <Gallery items={this.state.albums} isAlbumType onItemClick={this.handleNavigate} />
             }
             {this.state.photos.length > 0 &&
               <Gallery items={this.state.photos} onItemClick={this.handleLightboxActive} />
