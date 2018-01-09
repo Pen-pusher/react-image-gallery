@@ -6,19 +6,30 @@ class Gallery extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasTeaserButton: true
+      hasTeaser: props.hasTeaser
     };
     this.handleItemClick = this.handleItemClick.bind(this);
     this.teaserExpand = this.teaserExpand.bind(this);
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      hasTeaser: nextProps.hasTeaser
+    });
+  }
+
   handleItemClick(id) {
     this.props.onItemClick(id);
   }
-  teaserExpand() {
+
+  teaserExpand(isAlbumType) {
     this.setState({
-      hasTeaserButton: false
+      hasTeaser: false
     });
+    const type = isAlbumType ? 'albums' : 'photos';
+    this.props.onTeaserClick(type);
   }
+
   render() {
     const el = this.props.items.map((item, index) => {
       const thumbUrl = this.props.isAlbumType ? item.cover_photo.urls.thumb : item.urls.thumb;
@@ -41,7 +52,7 @@ class Gallery extends React.Component {
     });
     const type = this.props.isAlbumType ? 'album' : 'photo';
     const classArray = [Style[type]];
-    if (this.state.teaser) {
+    if (this.state.hasTeaser) {
       classArray.push(Style.tease);
     }
     const classes = classArray.join(' ');
@@ -51,9 +62,9 @@ class Gallery extends React.Component {
         <div className={classes}>
           <ul className={Style['list-group']}>{el}</ul>
         </div>
-        {this.state.hasTeaserButton &&
+        {this.state.hasTeaser &&
           <div className={Style.teaser}>
-            <Button label="全部顯示" flat onClick={this.teaserExpand} />
+            <Button label="全部顯示" flat onClick={() => this.teaserExpand(this.props.isAlbumType)} />
           </div>
         }
       </div>

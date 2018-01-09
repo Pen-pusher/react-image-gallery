@@ -50,6 +50,25 @@ class App extends React.Component {
     ScrollIt(0);
   }
 
+  static hasTeaser(isAlbumType, length) {
+    const width = window.innerWidth;
+    let threshold;
+
+    if (width < 768) {
+      threshold = 4;
+    } else if (width >= 768 && width < 1440) {
+      threshold = 8;
+    } else if (width >= 1440) {
+      threshold = 10;
+    }
+
+    if (!isAlbumType) {
+      threshold *= 4;
+    }
+
+    return length > threshold;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -61,13 +80,18 @@ class App extends React.Component {
         id: 0,
         name: 'Home'
       }],
-      hasBackToTopButton: false
+      hasBackToTopButton: false,
+      hasGalleryTeaser: {
+        albums: false,
+        photos: false
+      }
     };
     this.activeSlideIndex = 0;
     this.scrollY = 0;
     this.handleNavigate = this.handleNavigate.bind(this);
     this.handleLightboxActive = this.handleLightboxActive.bind(this);
     this.handlePageScroll = this.handlePageScroll.bind(this);
+    this.handleTeaserExpand = this.handleTeaserExpand.bind(this);
   }
 
   componentDidMount() {
@@ -109,7 +133,11 @@ class App extends React.Component {
         this.setState({
           collection: res[0],
           albums: res[1],
-          photos: res[2]
+          photos: res[2],
+          hasGalleryTeaser: {
+            albums: App.hasTeaser(true, res[1].length),
+            photos: App.hasTeaser(false, res[2].length)
+          }
         });
         // scroll page to top
         window.scroll(0, 0);
@@ -161,6 +189,14 @@ class App extends React.Component {
     }
   }
 
+  handleTeaserExpand(type) {
+    const nextTeaserState = this.state.hasGalleryTeaser;
+    nextTeaserState[type] = false;
+    this.setState({
+      hasGalleryTeaser: nextTeaserState
+    });
+  }
+
   render() {
     const copyrightYear = new Date().getFullYear();
     return (
@@ -186,10 +222,21 @@ class App extends React.Component {
           }
           <div className={Style.content}>
             {this.state.albums.length > 1 &&
-              <Gallery items={this.state.albums} isAlbumType onItemClick={this.handleNavigate} />
+              <Gallery
+                items={this.state.albums}
+                onItemClick={this.handleNavigate}
+                hasTeaser={this.state.hasGalleryTeaser.albums}
+                onTeaserClick={this.handleTeaserExpand}
+                isAlbumType
+              />
             }
             {this.state.photos.length > 0 &&
-              <Gallery items={this.state.photos} onItemClick={this.handleLightboxActive} />
+              <Gallery
+                items={this.state.photos}
+                onItemClick={this.handleLightboxActive}
+                hasTeaser={this.state.hasGalleryTeaser.photos}
+                onTeaserClick={this.handleTeaserExpand}
+              />
             }
           </div>
           <div className={Style.footer}>
