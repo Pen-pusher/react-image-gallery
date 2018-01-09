@@ -24,6 +24,26 @@ class Lightbox extends React.Component {
     this.stopAutoplay = this.stopAutoplay.bind(this);
   }
 
+  componentDidMount() {
+    // start autoplay after lightbox component is mounted to the DOM
+    this.startAutoplay();
+    // start control timer
+    // this.startControlTimer();
+    // add an event listener for keyboard events on window
+    // window.addEventListener('keydown', this.handleKeyboard);
+  }
+
+  componentWillUnmount() {
+    // when closing lightbox, first clear autoplay timer
+    this.stopAutoplay();
+    // then clear control timer
+    // this.clearControlTimer();
+    // clear idle timer
+    // this.clearIdleTimer();
+    // remove keyboard event listener
+    // window.removeEventListener('keydown', this.handleKeyboard);
+  }
+
   onClose() {
     this.props.onItemClick();
   }
