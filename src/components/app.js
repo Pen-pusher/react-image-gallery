@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { AppBar, Layout, Panel, Button } from 'react-toolbox';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import Gallery from './Gallery';
@@ -45,6 +46,11 @@ const Breadcrumbs = (props) => {
   return <div className={Style.breadcrumbs}>{el}</div>;
 };
 
+Breadcrumbs.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onCrumbClick: PropTypes.func.isRequired
+};
+
 class App extends React.Component {
   static backToTop() {
     ScrollIt(0);
@@ -73,8 +79,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       collection: {},
-      albums: props.albums || [],
-      photos: props.photos || [],
+      albums: props.albums,
+      photos: props.photos,
       isLightboxActive: false,
       breadcrumbs: [{
         id: 0,
@@ -266,5 +272,15 @@ class App extends React.Component {
     );
   }
 }
+
+App.propTypes = {
+  albums: PropTypes.arrayOf(PropTypes.object),
+  photos: PropTypes.arrayOf(PropTypes.object)
+};
+
+App.defaultProps = {
+  albums: [],
+  photos: []
+};
 
 export default App;

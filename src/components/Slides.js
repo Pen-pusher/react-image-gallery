@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Style from './Slides.css';
 
 class Slides extends React.Component {
@@ -54,5 +55,13 @@ class Slides extends React.Component {
     );
   }
 }
+
+Slides.propTypes = {
+  slides: PropTypes.arrayOf(PropTypes.object).isRequired,
+  active: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired
+};
 
 export default Slides;

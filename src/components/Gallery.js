@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-toolbox';
 import Style from './Gallery.css';
 
@@ -71,5 +72,17 @@ class Gallery extends React.Component {
     );
   }
 }
+
+Gallery.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onItemClick: PropTypes.func.isRequired,
+  onTeaserClick: PropTypes.func.isRequired,
+  hasTeaser: PropTypes.bool.isRequired,
+  isAlbumType: PropTypes.bool
+};
+
+Gallery.defaultProps = {
+  isAlbumType: false
+};
 
 export default Gallery;

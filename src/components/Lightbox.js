@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import Slides from './Slides';
-// import { Layout, Panel } from 'react-toolbox';
 import Style from './Lightbox.css';
 
 class Lightbox extends React.Component {
@@ -12,7 +12,7 @@ class Lightbox extends React.Component {
         index: props.index,
         description: props.slides[props.index].description,
         link: props.slides[props.index].links.html,
-        download: props.slides[props.index].links.download
+        downloadLocation: props.slides[props.index].links.download_location
       },
       autoplayTimer: null
     };
@@ -60,7 +60,7 @@ class Lightbox extends React.Component {
           index: nextIndex,
           description: this.props.slides[nextIndex].description,
           link: this.props.slides[nextIndex].links.html,
-          download: this.props.slides[nextIndex].links.download
+          downloadLocation: this.props.slides[nextIndex].links.download_location
         }
       });
     } else {
@@ -123,7 +123,13 @@ class Lightbox extends React.Component {
             <div className={Style.icon}>
               <FontIcon value="share" />
             </div>
-            <div className={Style.icon}>
+            <div
+              className={Style.icon}
+              role="button"
+              tabIndex="0"
+              onClick={Lightbox.downloadPhoto}
+              onKeyDown={event => event.which === 13 && Lightbox.downloadPhoto}
+            >
               <FontIcon value="file_download" />
             </div>
             <div
@@ -168,5 +174,11 @@ class Lightbox extends React.Component {
     );
   }
 }
+
+Lightbox.propTypes = {
+  index: PropTypes.string.isRequired,
+  slides: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onItemClick: PropTypes.func.isRequired
+};
 
 export default Lightbox;

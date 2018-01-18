@@ -50,3 +50,6 @@
   bottom: 32px;
   right: 16px;
 }
+.hidden {
+  display: none;
+}
