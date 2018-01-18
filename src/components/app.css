@@ -38,6 +38,10 @@
   display: inline-block;
 }
 .name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 110px;
   color: #000;
   display: inline-block;
   vertical-align: middle;
@@ -52,4 +56,10 @@
 }
 .hidden {
   display: none;
+}
+
+@media screen and (min-width: 780px) {
+  .name {
+    max-width: none;
+  }
 }
