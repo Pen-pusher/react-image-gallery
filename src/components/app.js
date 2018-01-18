@@ -222,7 +222,7 @@ class App extends React.Component {
               </h1>
               <div className={Style.actions} >
                 <Button raised primary label="分享相簿" />
-                <Button raised label="下載相簿" />
+                {/* <Button raised label="下載相簿" /> */}
               </div>
             </div>
           }
