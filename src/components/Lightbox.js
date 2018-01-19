@@ -175,7 +175,13 @@ class Lightbox extends React.Component {
             </div>
           </div>
           <div className={Style.fixed}>
-            <div className={Style.icon}>
+            <div 
+              className={Style.icon}
+              role="button"
+              tabIndex="0"
+              onClick={this.handleShareBoxActive}
+              onKeyDown={event => event.which === 13 && this.handleShareBoxActive}
+            >
               <FontIcon value="share" />
             </div>
             <div
