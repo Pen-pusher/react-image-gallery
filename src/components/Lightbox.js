@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import Slides from './Slides';
+import ShareDialog from './ShareDialog';
 import Style from './Lightbox.css';
 
 class Lightbox extends React.Component {
@@ -14,7 +15,8 @@ class Lightbox extends React.Component {
         link: props.slides[props.index].links.html,
         downloadLocation: props.slides[props.index].links.download_location
       },
-      autoplayTimer: null
+      autoplayTimer: null,
+      isShareBoxActive: false
     };
     this.length = props.slides.length;
     this.onClose = this.onClose.bind(this);
@@ -22,6 +24,8 @@ class Lightbox extends React.Component {
     this.handleSlidesAutoplay = this.handleSlidesAutoplay.bind(this);
     this.startAutoplay = this.startAutoplay.bind(this);
     this.stopAutoplay = this.stopAutoplay.bind(this);
+    this.handleShareBoxActive = this.handleShareBoxActive.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount() {
@@ -92,7 +96,58 @@ class Lightbox extends React.Component {
       clearInterval(this.state.autoplayTimer);
       this.setState({
         autoplayTimer: null
+      }, () => {
+        // remove keyboard event listener when share dialog is active
+        // add it back when share is inactive
+        if (this.state.isShareBoxActive) {
+          window.removeEventListener('keydown', this.handleKeyDown);
+        } else {
+          window.addEventListener('keydown', this.handleKeyDown);
+        }
       });
+    }
+  }
+
+  handleShareBoxActive() {
+    // pause autoplay
+    if (this.state.autoplayTimer) {
+      this.stopAutoplay(this.state.autoplayTimer);
+    }
+    // trigger share dialog
+    this.setState({
+      isShareBoxActive: !this.state.isShareBoxActive
+    });
+  }
+
+  handleKeyDown(event) {
+    const { keyCode } = event;
+    switch (keyCode) {
+      case 32:
+        // space bar
+        // this.toggleControl();
+        this.handleSlidesAutoplay();
+        break;
+      case 37:
+        // left arrow
+        this.handleSlidesUpdate(-1);
+        break;
+      case 39:
+        // right arrow
+        this.handleSlidesUpdate(1);
+        break;
+      case 67:
+        // c
+        this.onClose();
+        break;
+      case 68:
+        // d
+        // this.handleDownload(event);
+        break;
+      case 83:
+        // s
+        this.handleShareBoxActive();
+        break;
+      // no default
     }
   }
 
@@ -170,6 +225,12 @@ class Lightbox extends React.Component {
             <FontIcon value="chevron_right" />
           </div>
         }
+        <ShareDialog
+          type="photo"
+          active={this.state.isShareBoxActive}
+          link={this.state.active.link}
+          onCloseClick={this.handleShareBoxActive}
+        />
       </div>
     );
   }
