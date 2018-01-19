@@ -4,6 +4,7 @@ import { AppBar, Layout, Panel, Button } from 'react-toolbox';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import Gallery from './Gallery';
 import Lightbox from './Lightbox';
+import ShareDialog from './ShareDialog';
 import Style from './App.css';
 import Fetch from '../Fetch';
 import ScrollIt from '../ScrollIt';
@@ -82,6 +83,7 @@ class App extends React.Component {
       albums: props.albums,
       photos: props.photos,
       isLightboxActive: false,
+      isShareBoxActive: false,
       breadcrumbs: [{
         id: 0,
         name: 'Home'
@@ -98,6 +100,7 @@ class App extends React.Component {
     this.handleLightboxActive = this.handleLightboxActive.bind(this);
     this.handlePageScroll = this.handlePageScroll.bind(this);
     this.handleTeaserExpand = this.handleTeaserExpand.bind(this);
+    this.handleShareBoxActive = this.handleShareBoxActive.bind(this);
   }
 
   componentDidMount() {
@@ -203,6 +206,12 @@ class App extends React.Component {
     });
   }
 
+  handleShareBoxActive() {
+    this.setState({
+      isShareBoxActive: !this.state.isShareBoxActive
+    });
+  }
+
   render() {
     const copyrightYear = new Date().getFullYear();
     return (
@@ -221,7 +230,7 @@ class App extends React.Component {
                 {this.state.collection.title}
               </h1>
               <div className={Style.actions} >
-                <Button raised primary label="分享相簿" />
+                <Button raised primary label="分享相簿" onClick={this.handleShareBoxActive} />
                 {/* <Button raised label="下載相簿" /> */}
               </div>
             </div>
@@ -256,6 +265,14 @@ class App extends React.Component {
             slides={this.state.photos}
             index={this.activeSlideIndex}
             onItemClick={this.handleLightboxActive}
+          />
+        }
+        {this.state.collection.id &&
+          <ShareDialog
+            type="album"
+            active={this.state.isShareBoxActive}
+            link={this.state.collection.links.html}
+            onCloseClick={this.handleShareBoxActive}
           />
         }
         {this.state.hasBackToTopButton &&

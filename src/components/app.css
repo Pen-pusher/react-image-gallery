@@ -62,4 +62,8 @@
   .name {
     max-width: none;
   }
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+  }
 }

@@ -5,6 +5,10 @@ import './Base.css';
 import App from './components/App';
 import Fetch from './Fetch';
 
+const pathname = window.location.pathname;
+console.log('pathname: ', pathname);
+
+
 Fetch('collections/featured/?per_page=20').then((res) => {
   if (res.errors) {
     console.log('not ok');
