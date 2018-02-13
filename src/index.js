@@ -6,7 +6,6 @@ import App from './components/App';
 import Fetch from './Fetch';
 
 const { pathname } = window.location;
-console.log('pathname: ', pathname);
 
 
 Fetch('collections/featured/?per_page=20').then((res) => {
