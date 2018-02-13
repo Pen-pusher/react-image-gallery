@@ -136,12 +136,12 @@
   }
   
   .album .list-group .item:nth-child(8n+1):nth-last-child(-n+8) ~ .item,
-  .album .list-group .item:nth-child(8n+1):nth-last-child(-n+8) ~ .item {
+  .photo .list-group .item:nth-child(8n+1):nth-last-child(-n+8) ~ .item {
     margin-left: 0px;
   }
 
   .album .list-group .item:nth-child(10n+1):nth-last-child(-n+10) ~ .item,
-  .album .list-group .item:nth-child(10n+1):nth-last-child(-n+10) ~ .item {
+  .photo .list-group .item:nth-child(10n+1):nth-last-child(-n+10) ~ .item {
     margin-left: 8px;
   }
 
