@@ -57,7 +57,7 @@ class App extends React.Component {
     ScrollIt(0);
   }
 
-  static hasTeaser(isAlbumType, length) {
+  static hasTeaser(length, isAlbumType) {
     const width = window.innerWidth;
     let threshold;
 
@@ -96,7 +96,7 @@ class App extends React.Component {
     };
     this.activeSlideIndex = 0;
     this.scrollY = 0;
-    this.handleNavigate = this.handleNavigate.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
     this.handleLightboxActive = this.handleLightboxActive.bind(this);
     this.handlePageScroll = this.handlePageScroll.bind(this);
     this.handleTeaserExpand = this.handleTeaserExpand.bind(this);
@@ -115,7 +115,7 @@ class App extends React.Component {
     }
   }
 
-  handleNavigate(id, goBack) {
+  handleUpdate(id, goBack) {
     if (id) {
       // get new collection data
       const getCollection = Fetch(`collections/${id}`);
@@ -144,8 +144,8 @@ class App extends React.Component {
           albums: res[1],
           photos: res[2],
           hasGalleryTeaser: {
-            albums: App.hasTeaser(true, res[1].length),
-            photos: App.hasTeaser(false, res[2].length)
+            albums: App.hasTeaser(res[1].length, true),
+            photos: App.hasTeaser(res[2].length)
           }
         });
         // scroll page to top
@@ -224,22 +224,21 @@ class App extends React.Component {
           {this.state.photos.length > 0 &&
             <div className={Style['page-header']}>
               {this.state.breadcrumbs.length > 0 &&
-                <Breadcrumbs items={this.state.breadcrumbs} onCrumbClick={this.handleNavigate} />
+                <Breadcrumbs items={this.state.breadcrumbs} onCrumbClick={this.handleUpdate} />
               }
               <h1 className={Style.title}>
                 {this.state.collection.title}
               </h1>
               <div className={Style.actions} >
                 <Button raised primary label="分享相簿" onClick={this.handleShareBoxActive} />
-                {/* <Button raised label="下載相簿" /> */}
               </div>
             </div>
           }
           <div className={Style.content}>
-            {this.state.albums.length > 1 &&
+            {this.state.albums.length > 0 &&
               <Gallery
                 items={this.state.albums}
-                onItemClick={this.handleNavigate}
+                onItemClick={this.handleUpdate}
                 hasTeaser={this.state.hasGalleryTeaser.albums}
                 onTeaserClick={this.handleTeaserExpand}
                 isAlbumType
