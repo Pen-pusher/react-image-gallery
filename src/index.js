@@ -5,7 +5,7 @@ import './Base.css';
 import App from './components/App';
 import Fetch from './Fetch';
 
-const pathname = window.location.pathname;
+const { pathname } = window.location;
 console.log('pathname: ', pathname);
 
 
