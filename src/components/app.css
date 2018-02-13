@@ -4,17 +4,18 @@
   "PingFang TC", "Segoe UI", "Microsoft YaHei", "wenquanyi micro hei", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
   "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #FAFAFA;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-.fixed {
-  position: fixed;
+.content {
+  flex: 1 0 0px;
 }
+
 .page-header {
   border-bottom: 1px solid rgba(0,0,0,.12);
   background-color: #FFF;
   padding: 0 16px;
-}
-.content {
-  flex: 1 0 0px;
 }
 .title, .actions {
   margin: 16px 0;
@@ -54,11 +55,14 @@
   bottom: 32px;
   right: 16px;
 }
+.fixed {
+  position: fixed;
+}
 .hidden {
   display: none;
 }
 
-@media screen and (min-width: 780px) {
+@media screen and (min-width: 768px) {
   .name {
     max-width: none;
   }
