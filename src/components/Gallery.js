@@ -19,8 +19,8 @@ class Gallery extends React.Component {
     });
   }
 
-  handleItemClick(id) {
-    this.props.onItemClick(id);
+  handleItemClick(arg) {
+    this.props.onItemClick(arg);
   }
 
   teaserExpand(isAlbumType) {
