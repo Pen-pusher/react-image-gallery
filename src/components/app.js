@@ -263,7 +263,7 @@ class App extends React.Component {
           <Lightbox
             slides={this.state.photos}
             index={this.activeSlideIndex}
-            onItemClick={this.handleLightboxActive}
+            onCloseClick={this.handleLightboxActive}
           />
         }
         {this.state.collection.id &&
