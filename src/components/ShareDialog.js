@@ -3,6 +3,25 @@ import PropTypes from 'prop-types';
 import { Dialog } from 'react-toolbox';
 import Style from './ShareDialog.css';
 
+// IE polyfill for .remove()
+((arr) => {
+  arr.forEach((item) => {
+    if (Object.prototype.hasOwnProperty.call(item, 'remove')) {
+      return;
+    }
+    Object.defineProperty(item, 'remove', {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function remove() {
+        if (this.parentNode !== null) {
+          this.parentNode.removeChild(this);
+        }
+      }
+    });
+  });
+})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
 class ShareDialog extends React.Component {
   constructor(props) {
     super(props);
@@ -61,7 +80,7 @@ class ShareDialog extends React.Component {
         theme={Style}
       >
         <p className={Style.link}>{this.props.link}</p>
-        { this.state.isLinkCopied && <p className={Style.success}>此連結已複製到剪貼簿！</p> }
+        {this.state.isLinkCopied && <p className={Style.success}>此連結已複製到剪貼簿！</p>}
       </Dialog>
     );
   }

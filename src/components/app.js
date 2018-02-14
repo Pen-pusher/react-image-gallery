@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AppBar, Layout, Panel, Button } from 'react-toolbox';
@@ -173,7 +174,12 @@ class App extends React.Component {
       // if lightbox is closed
       // set clicked photo index number
       // and get window scroll position
-      this.scrollY = window.scrollY;
+      if (window.scrollY) {
+        this.scrollY = window.scrollY;
+      } else {
+        // IE not suport .scrollY
+        this.scrollY = document.documentElement.scrollTop;
+      }
       this.activeSlideIndex = index;
     }
     this.setState({
