@@ -67,9 +67,13 @@
 .prev {
   composes: chevron;
   left: 16px;
+  margin-left: constant(safe-area-inset-left);
+  margin-left: env(safe-area-inset-left);  
 }
 
 .next {
   composes: chevron;
   right: 16px;
+  margin-right: constant(safe-area-inset-right);
+  margin-right: env(safe-area-inset-right);  
 }

@@ -18,6 +18,10 @@
   border-bottom: 1px solid rgba(0,0,0,.12);
   background-color: #FFF;
   padding: 0 16px;
+  margin-left: constant(safe-area-inset-left);
+  margin-right: constant(safe-area-inset-right);
+  margin-left: env(safe-area-inset-left);
+  margin-right: env(safe-area-inset-right);  
 }
 
 .title, .actions {
@@ -38,11 +42,17 @@
 .footer {
   color: rgba(255,255,255,.7);
   background-color: #000;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);  
 }
 
 .copyright {
   text-align: center;
   padding: 16px 0;
+  padding-left: constant(safe-area-inset-left);
+  padding-right: constant(safe-area-inset-right);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);  
 }
 
 .breadcrumbs {
@@ -71,6 +81,10 @@
   position: fixed;
   bottom: 32px;
   right: 16px;
+  margin-right: constant(safe-area-inset-right);
+  margin-right: env(safe-area-inset-right);
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);  
 }
 
 .fixed {
