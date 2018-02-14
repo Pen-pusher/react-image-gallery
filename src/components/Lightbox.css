@@ -30,8 +30,9 @@
 }
 
 .icon {
-  font-size: 0;
+  cursor: pointer;
   display: inline-block;
+  font-size: 0;
   padding: 8px;
 }
 
