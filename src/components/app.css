@@ -4,12 +4,14 @@
   "PingFang TC", "Segoe UI", "Microsoft YaHei", "wenquanyi micro hei", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
   "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #FAFAFA;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-.content {
-  flex: 1 0 0px;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .page-header {
@@ -17,27 +19,40 @@
   background-color: #FFF;
   padding: 0 16px;
 }
+
 .title, .actions {
   margin: 16px 0;
   padding-left: 16px;
 }
-/* .actions button:last-child {
-  margin-left: 16px;
-} */
+
+.content {
+  flex: 1 0 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-inner {
+  flex: 1 0 auto;
+}
+
 .footer {
   color: rgba(255,255,255,.7);
   background-color: #000;
 }
+
 .copyright {
   text-align: center;
   padding: 16px 0;
 }
+
 .breadcrumbs {
   margin-top: 16px;
 }
+
 .crumb {
   display: inline-block;
 }
+
 .name {
   overflow: hidden;
   white-space: nowrap;
@@ -47,17 +62,21 @@
   display: inline-block;
   vertical-align: middle;
 }
+
 .chevron-right {
   vertical-align: middle;
 }
+
 .btt {
   position: fixed;
   bottom: 32px;
   right: 16px;
 }
+
 .fixed {
   position: fixed;
 }
+
 .hidden {
   display: none;
 }

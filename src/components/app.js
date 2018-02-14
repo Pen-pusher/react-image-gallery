@@ -226,42 +226,44 @@ class App extends React.Component {
         style={this.state.isLightboxActive ? { top: `-${this.scrollY}px` } : null}
       >
         <Panel theme={Style}>
-          <AppBar title="React Image Gallery" theme={AppBarTheme} flat />
-          {this.state.photos.length > 0 &&
-            <div className={Style['page-header']}>
-              {this.state.breadcrumbs.length > 0 &&
-                <Breadcrumbs items={this.state.breadcrumbs} onCrumbClick={this.handleUpdate} />
-              }
-              <h1 className={Style.title}>
-                {this.state.collection.title}
-              </h1>
-              <div className={Style.actions} >
-                <Button raised primary label="分享相簿" onClick={this.handleShareBoxActive} />
-              </div>
-            </div>
-          }
-          <div className={Style.content}>
-            {this.state.albums.length > 0 &&
-              <Gallery
-                items={this.state.albums}
-                onItemClick={this.handleUpdate}
-                hasTeaser={this.state.hasGalleryTeaser.albums}
-                onTeaserClick={this.handleTeaserExpand}
-                isAlbumType
-              />
-            }
+          <div className={Style.page}>
+            <AppBar title="React Image Gallery" theme={AppBarTheme} flat />
             {this.state.photos.length > 0 &&
-              <Gallery
-                items={this.state.photos}
-                onItemClick={this.handleLightboxActive}
-                hasTeaser={this.state.hasGalleryTeaser.photos}
-                onTeaserClick={this.handleTeaserExpand}
-              />
+              <div className={Style['page-header']}>
+                {this.state.breadcrumbs.length > 0 &&
+                  <Breadcrumbs items={this.state.breadcrumbs} onCrumbClick={this.handleUpdate} />
+                }
+                <h1 className={Style.title}>
+                  {this.state.collection.title}
+                </h1>
+                <div className={Style.actions} >
+                  <Button raised primary label="分享相簿" onClick={this.handleShareBoxActive} />
+                </div>
+              </div>
             }
-          </div>
-          <div className={Style.footer}>
-            <div className={Style.copyright}>
-              &copy; {copyrightYear} 版權所有
+            <div className={Style.content}>
+              {this.state.albums.length > 0 &&
+                <Gallery
+                  items={this.state.albums}
+                  onItemClick={this.handleUpdate}
+                  hasTeaser={this.state.hasGalleryTeaser.albums}
+                  onTeaserClick={this.handleTeaserExpand}
+                  isAlbumType
+                />
+              }
+              {this.state.photos.length > 0 &&
+                <Gallery
+                  items={this.state.photos}
+                  onItemClick={this.handleLightboxActive}
+                  hasTeaser={this.state.hasGalleryTeaser.photos}
+                  onTeaserClick={this.handleTeaserExpand}
+                />
+              }
+            </div>
+            <div className={Style.footer}>
+              <div className={Style.copyright}>
+                &copy; {copyrightYear} 版權所有
+              </div>
             </div>
           </div>
         </Panel>
