@@ -231,9 +231,9 @@ class Lightbox extends React.Component {
         <Slides
           slides={this.props.slides}
           active={this.state.active.index}
-          handleAutoplay={this.handleSlideAutoplay}
-          handleUpdate={this.handleSlideUpdate}
-          autoplayTimer={this.autoplayTimer}
+          canAutoplay={this.handleSlideAutoplay}
+          onSlideUpdate={this.handleSlideUpdate}
+          isAutoplaying={this.state.isAutoplayingSlides}
         />
         <div className={Style['tool-bar']}>
           <div className={Style.fixed} />
