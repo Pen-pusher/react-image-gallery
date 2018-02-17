@@ -49,6 +49,10 @@ class Slides extends React.Component {
     });
   }
 
+  handleTouchStart(event) {
+    this.start(event);
+  }
+
   handleTouchMove(event) {
     this.move(event);
   }
