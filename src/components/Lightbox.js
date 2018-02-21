@@ -235,7 +235,7 @@ class Lightbox extends React.Component {
           onSlideUpdate={this.handleSlideUpdate}
           isAutoplaying={this.state.isAutoplayingSlides}
         />
-        <div className={Style['tool-bar']}>
+        <div className={Style['tool-bar']} style={this.state.hasControl ? {} : this.controlHidden}>
           <div className={Style.fixed} />
           <div className={Style.fill}>
             <div
@@ -279,13 +279,14 @@ class Lightbox extends React.Component {
           </div>
         </div>
         {this.state.active.description &&
-          <div className={Style['description-bar']}>
+          <div className={Style['description-bar']} style={this.state.hasControl ? {} : this.controlHidden}>
             <div>{this.state.active.description}</div>
           </div>
         }
         {parseInt(this.state.active.index, 10) > 0 &&
           <div
             className={Style.prev}
+            style={this.state.hasControl ? {} : this.controlHidden}
             role="button"
             tabIndex="0"
             onClick={() => this.handleSlideUpdate(-1)}
@@ -297,6 +298,7 @@ class Lightbox extends React.Component {
         {parseInt(this.state.active.index, 10) < this.length - 1 &&
           <div
             className={Style.next}
+            style={this.state.hasControl ? {} : this.controlHidden}
             role="button"
             tabIndex="0"
             onClick={() => this.handleSlideUpdate(1)}
