@@ -227,7 +227,12 @@ class Lightbox extends React.Component {
 
   render() {
     return (
-      <div className={Style.lightbox}>
+      <div
+        className={Style.lightbox}
+        onMouseMoveCapture={this.onIdleInterrupt}
+        onTouchStart={this.wakeUp}
+        onTouchEnd={() => this.onStartingTimer('idle')}
+      >
         <Slides
           slides={this.props.slides}
           active={this.state.active.index}
