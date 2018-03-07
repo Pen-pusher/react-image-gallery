@@ -1,14 +1,16 @@
 # React Image Gallery
 An [Unsplash.com](https://unsplash.com/) collection and photo viewer built with React. 
 
-[site](https://yowlonglee.github.io/react-image-gallery/)
-
 ## About
 While I was learning React.js, I was looking for something to do to test my React knowledge. So I came up with the idea of making an online album kinda like Google Photo. You can browse through Unsplash’s photo collections and view hight quality photos in an easy-to-use slides UI.
 
 This project uses Material Design as its design language. Supports RWD and IE 11.
 
 ## Screenshots
+[Home](assets/home.png)
+[Browsing photo collections](assets/albums.png)
+[Photo slides](slides.png)
+
 
 ## Built With
 - React
@@ -18,14 +20,21 @@ This project uses Material Design as its design language. Supports RWD and IE 11
 
 ## Features
 * Browse through Unsplash.com photo collections
-* Share links of interesting albums and photos with one-click
+* Share links of interesting albums and photos with one click
 * View high quality photos in slides UI
 * Support IE 11
 
 ## Installation
-Download the Zip file and extract to a folder, open `index.html` with your browser.
+1. Download the Zip file and extract to a folder.
 
-Or just view the [online site](https://yowlonglee.github.io/react-image-gallery/).
+2. Install all the dependency packages.
+`$ yarn install`
+
+3. Watch changes in `src` folder
+`$ yarn start`
+
+4. Compile `bundle.min.js` file
+`$ yarn build -p`
 
 ## API Reference
 [Unsplash API](https://unsplash.com/developers)
