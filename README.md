@@ -9,7 +9,7 @@ This project uses Material Design as its design language. Supports RWD and IE 11
 ## Screenshots
 ![Home](assets/home.png "Home")
 ![Browsing photo collections](assets/albums.png "Browsing photo collections")
-![Photo slides](slides.png "Photo slides")
+![Photo slides](assets/slides.png "Photo slides")
 
 
 ## Built With
