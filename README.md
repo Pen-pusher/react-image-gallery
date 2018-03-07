@@ -7,8 +7,11 @@ While I was learning React.js, I was looking for something to do to test my Reac
 This project uses Material Design as its design language. Supports RWD and IE 11.
 
 ## Screenshots
+The home screen
 ![Home](assets/home.png "Home")
+Browsing Unsplash collections in album screen
 ![Browsing photo collections](assets/albums.png "Browsing photo collections")
+View high-quality photos in photo slides
 ![Photo slides](assets/slides.png "Photo slides")
 
 
