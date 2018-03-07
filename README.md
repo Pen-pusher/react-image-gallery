@@ -28,13 +28,19 @@ This project uses Material Design as its design language. Supports RWD and IE 11
 1. Download the Zip file and extract to a folder.
 
 2. Install all the dependency packages.
-`$ yarn install`
+```
+$ yarn install
+```
 
 3. Watch changes in `src` folder
-`$ yarn start`
+```
+$ yarn start
+```
 
 4. Compile `bundle.min.js` file
-`$ yarn build -p`
+```
+$ yarn build -p
+```
 
 ## API Reference
 [Unsplash API](https://unsplash.com/developers)
