@@ -32,7 +32,7 @@ View high-quality photos in photo slides
 
 2. Install all the dependency packages.
 ```
-$ yarn install
+$ yarn
 ```
 
 3. Watch changes in `src` folder
